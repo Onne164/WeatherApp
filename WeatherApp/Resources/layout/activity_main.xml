@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:minWidth="25px"
         android:minHeight="25px"
+        android:gravity="center"
         android:id="@+id/cityEditText"
         android:hint="City" />
     <Button
@@ -20,16 +21,28 @@
     <ImageView
         android:src="@android:drawable/ic_menu_gallery"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/weatherImageView" />
+        android:layout_height="100dp"
+        android:scaleType="fitCenter"
+        android:id="@+id/weatherImageView"
+        android:contentDescription="" />
     <TextView
-        android:text="Text"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:id="@+id/TemperatureTextView" />
     <TextView
-        android:text="Text"
+        android:text=""
+        android:textAppearance="?android:attr/textAppearanceLarge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:id="@+id/WindTextView" />
+    <ListView
+		android:minWidth="25px"
+		android:minHeight="25px"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/forecastListView" />
 </LinearLayout>

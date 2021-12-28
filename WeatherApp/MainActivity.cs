@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Widget;
 using AndroidX.AppCompat.App;
+using WeatherApp.Adapters;
 using WeatherApp.Services;
 
 namespace WeatherApp
@@ -21,22 +22,26 @@ namespace WeatherApp
             var searchButton = FindViewById<Button>(Resource.Id.searchButton);
             var temperatureTextView = FindViewById<TextView>(Resource.Id.TemperatureTextView);
             var windTextView = FindViewById<TextView>(Resource.Id.WindTextView);
-            var weatherImageView = FindViewById<ImageView>(Resource.Id.weatherImageView); 
+            var weatherImageView = FindViewById<ImageView>(Resource.Id.weatherImageView);
             var weatherService = new WeatherService();
 
             searchButton.Click += async delegate
             {
                 var data = await weatherService.GetCityWeather(cityEditText.Text);
-                temperatureTextView.Text = data.main.temp.ToString();
-                windTextView.Text = data.wind.speed.ToString();
+                temperatureTextView.Text = data.main.temp.ToString() + " °C";
+                windTextView.Text = data.wind.speed.ToString() + " m/s";
 
                 var imageBytes = await weatherService.GetImageFromUrl($"https://openweathermap.org/img/wn/{data.weather[0].icon}@2x.png");
-                var bitmap = await BitmapFactory.DecodeByteArrayAsync(imageBytes,0, imageBytes.Length);
+                var bitmap = await BitmapFactory.DecodeByteArrayAsync(imageBytes, 0, imageBytes.Length);
                 weatherImageView.SetImageBitmap(bitmap);
+
+                var forecastListView = FindViewById<ListView>(Resource.Id.forecastListView);
+                var weatherForecast = await weatherService.GetCityWeatherForecast(cityEditText.Text);
+                forecastListView.Adapter = new ListAdapter(this, weatherForecast.list);
             };
 
-          
-            
+
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

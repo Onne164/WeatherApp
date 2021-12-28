@@ -18,7 +18,7 @@ namespace WeatherApp.Services
     public class WeatherService
     {
         const string ApiKey = "2818e263edb914f4a5ee5f410b9feff3";
-        
+
         public async Task<WeatherInfo> GetCityWeather(string city)
         {
             var client = new HttpClient();
@@ -35,10 +35,27 @@ namespace WeatherApp.Services
             {
                 throw ex;
             }
-           
+
         }
 
-        public async Task<Byte[]>GetImageFromUrl(string url)
+        public async Task<WeatherForecast> GetCityWeatherForecast(string city)
+        {
+            var client = new HttpClient();
+
+            try
+            {
+
+                var response = await client.GetStringAsync($"https://api.openweathermap.org/data/2.5/forecast?q={city}&units=metric&appid={ApiKey}");
+                var data = JsonConvert.DeserializeObject<WeatherForecast>(response);
+                return data;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<Byte[]> GetImageFromUrl(string url)
         {
             using (var client = new HttpClient())
             {
@@ -46,7 +63,8 @@ namespace WeatherApp.Services
                 if (msg.IsSuccessStatusCode)
                 {
                     var byteArray = await msg.Content.ReadAsByteArrayAsync();
-                    return byteArray;                }
+                    return byteArray;
+                }
             }
             return null;
         }
