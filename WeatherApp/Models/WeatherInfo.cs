@@ -25,7 +25,7 @@ namespace WeatherApp.Models
         public string main { get; set; }
         public string description { get; set; }
         public string icon { get; set; }
-        public Bitmap Image { get; internal set; }
+        public Android.Graphics.Bitmap Image { get; set; }
     }
 
     public partial class Main

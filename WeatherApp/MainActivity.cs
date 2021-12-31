@@ -24,6 +24,7 @@ namespace WeatherApp
             var windTextView = FindViewById<TextView>(Resource.Id.WindTextView);
             var weatherImageView = FindViewById<ImageView>(Resource.Id.weatherImageView);
             var weatherService = new WeatherService();
+   
 
             searchButton.Click += async delegate
             {
@@ -38,6 +39,7 @@ namespace WeatherApp
                 var forecastListView = FindViewById<ListView>(Resource.Id.forecastListView);
                 var weatherForecast = await weatherService.GetCityWeatherForecast(cityEditText.Text);
                 forecastListView.Adapter = new ListAdapter(this, weatherForecast.list);
+               
             };
 
 
